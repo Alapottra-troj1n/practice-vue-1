@@ -9,7 +9,9 @@ export default {
 
   data() {
     return {
-      tasks: []
+      tasks: [],
+      showTask: false,
+      posts : []
     }
   },
   
@@ -27,12 +29,24 @@ export default {
 
         this.tasks = [...this.tasks, newTask];
 
+      },
+      toggleTask(){
+
+        this.showTask = !this.showTask;
+
+      },
+      async fetchPost(){
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = res.json();
+        return data;
+
       }
 
   },
 
 
-  created() {
+  async created() {
+
     this.tasks = [
       {
         "userId": 1,
@@ -52,8 +66,12 @@ export default {
         "title": "fugiat veniam minus",
         "completed": false
       }
-    ]
+    ],
+    this.posts = await this.fetchPost();
+
+    
   },
+
 
 
 
@@ -65,10 +83,17 @@ export default {
 </script>
 
 <template>
-  <Header title="Test Application" />
-  <AddTask @add-task="addTask" />
+  <Header :showTask="showTask" @toggle-task-btn="toggleTask" title="Test Application" />
+  <div v-show="showTask" ><AddTask @add-task="addTask" /></div>
   <h2>Hello World</h2>
   <Tasks @toggle-reminder="toggleReminder"  @delete-task="deleteTask" :tasks="tasks" />
+
+<div>
+  <h2>Fetched From API</h2>
+  <div v-for="post in posts" >
+      {{post.title}}
+  </div>
+</div>
 
 
 

@@ -1,7 +1,7 @@
 <template>
     <header>
         <h2>{{title}}</h2>
-        <Button/>
+        <Button @toggle-task-btn="$emit('toggle-task-btn')" :title="showTask ? 'Close' : 'Add Task' "  />
     </header>
 </template>
 
@@ -11,10 +11,12 @@ import Button from './Button.vue';
 
 export default {
     name: "Header",
-    props: { title: {
-            Type: String
-        }, component: { Button }
-    },
+    props: { 
+        title: String,
+        showTask: Boolean
+            
+    }
+    ,
     components: { Button }
 }
 

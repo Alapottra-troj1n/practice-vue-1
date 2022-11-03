@@ -1,12 +1,17 @@
 <template>
-    <button>
-        Add Task
+    <button @click="$emit('toggle-task-btn')" >
+        {{title}}
     </button>
 </template>
 
 <script>
     export default {
-        name: 'Button'
+        name: 'Button',
+        props: {
+            title: String
+        }
+
+
     }
 </script>
 
